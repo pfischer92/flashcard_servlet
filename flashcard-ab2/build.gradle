@@ -1,0 +1,43 @@
+def war_name = 'flashcard-ub2'
+def war_source = 'build/libs'
+def war_deployment_dest = '/Applications/tomcat/webapps'
+def tomcat_install_dir = '/Applications/tomcat'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+war {
+    baseName = war_name
+}
+
+task('delete-war-at-dpl', type: Delete, dependsOn: 'war') {
+  println "Deleting war from tomcat deployment folder."
+  delete  war_deployment_dest + '/' + war_name, war_deployment_dest + '/' + war_name + '.war'
+  followSymlinks = true
+}
+
+task('copy-wars-to-dpl', type: Copy, dependsOn: 'delete-war-at-dpl') {
+  println "Copying wars into tomcat deploy-folder."
+  from war_source
+  into war_deployment_dest
+}
+
+task('start', type: Exec, dependsOn: 'copy-wars-to-dpl') {
+  commandLine tomcat_install_dir + '/bin/startup.sh'
+}
+
+task('stop', type: Exec) {
+  commandLine tomcat_install_dir + '/bin/shutdown.sh'
+}
+
+task dpl(dependsOn: 'start')
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.0'
+    testCompile 'junit:junit:4.11'
+}
+
