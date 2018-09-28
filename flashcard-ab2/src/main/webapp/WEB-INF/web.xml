@@ -13,4 +13,19 @@
 		<servlet-name>Basic Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+	<filter-name>BasicFilter</filter-name>
+	<filter-class>ch.fhnw.webfr.flashcard.filter.BasicFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>BasicFilter</filter-name>
+		<servlet-name>Basic Servlet</servlet-name>
+	</filter-mapping>
+	
+	<context-param>
+		<param-name>mode</param-name>
+		<param-value>test</param-value>
+	</context-param>
 </web-app>
