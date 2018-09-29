@@ -24,8 +24,17 @@
 		<servlet-name>Basic Servlet</servlet-name>
 	</filter-mapping>
 	
+	<listener>
+		<listener-class>ch.fhnw.webfr.flashcard.listener.BasicListener</listener-class>
+	</listener>
+	
 	<context-param>
 		<param-name>mode</param-name>
 		<param-value>test</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>i18n</param-name>
+		<param-value>i18n.properties</param-value>
 	</context-param>
 </web-app>
